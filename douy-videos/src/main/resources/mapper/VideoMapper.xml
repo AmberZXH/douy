@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangxuhui.mapper.VideoMapper">
+    <resultMap id="BaseResultMap" type="com.zhangxuhui.entity.Video">
+        <!--@mbg.generated-->
+        <!--@Table video-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="intro" jdbcType="VARCHAR" property="intro"/>
+        <result column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="cover" jdbcType="VARCHAR" property="cover"/>
+        <result column="link" jdbcType="VARCHAR" property="link"/>
+        <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+        <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
+    </resultMap>
+
+    <resultMap id="VideoResultMap" type="com.zhangxuhui.vo.result.VideoResult">
+        <!--@mbg.generated-->
+        <!--@Table video-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="intro" jdbcType="VARCHAR" property="intro"/>
+        <result column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="cover" jdbcType="VARCHAR" property="cover"/>
+        <result column="link" jdbcType="VARCHAR" property="link"/>
+        <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
+        <result column="name" property="category"/>
+        <collection property="uploader" ofType="com.zhangxuhui.vo.Uploader">
+            <result column="up_id" property="id"/>
+            <result column="up_name" property="name"/>
+            <result column="up_avatar" property="avatar"/>
+            <result column="up_intro" property="intro"/>
+            <result column="up_phone" property="phone"/>
+            <result column="up_phone_linked" property="phone_linked"/>
+            <result column="up_openid" property="openid"/>
+            <result column="up_wechat_linked" property="wechat_linked"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, title, intro, `uid`, cover, link, category_id, created_at, updated_at, deleted_at
+    </sql>
+
+    <select id="selectByPages" resultType="com.zhangxuhui.vo.result.VideoResult" resultMap="VideoResultMap">
+        SELECT a.id,
+               a.title,
+               a.cover,
+               a.intro,
+               a.uid,
+               a.link,
+               a.category_id,
+               b.name,
+               c.id            up_id,
+               c.name          up_name,
+               c.avatar        up_avatar,
+               c.intro         up_intro,
+               c.phone         up_phone,
+               c.phone_linked  up_phone_linked,
+               c.openid        up_openid,
+               c.wechat_linked up_wechat_linked
+        FROM video a,
+             category b,
+             user c
+        WHERE a.category_id = b.id
+          and a.uid = c.id
+        <if test="query.id!=null">
+            AND a.id = #{query.id}
+        </if>
+        <if test="query.name !=null">
+            AND  a.title = #{query.name}
+        </if>
+        <if test="query.category_id  != null ">
+            AND  a.category_id = #{query.category_id}
+        </if>
+        <if test="query.uploader_name != null">
+            AND c.name  = #{query.uploader_name}
+        </if>
+
+    </select>
+</mapper>

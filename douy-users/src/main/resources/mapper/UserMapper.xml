@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangxuhui.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.zhangxuhui.entity.User">
+    <!--@mbg.generated-->
+    <!--@Table `user`-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="intro" jdbcType="VARCHAR" property="intro" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="phone_linked" jdbcType="BOOLEAN" property="phoneLinked" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="wechat_linked" jdbcType="BOOLEAN" property="wechatLinked" />
+    <result column="following_count" jdbcType="INTEGER" property="followingCount" />
+    <result column="followers_count" jdbcType="INTEGER" property="followersCount" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, avatar, intro, phone, phone_linked, openid, wechat_linked, following_count, 
+    followers_count, created_at, updated_at, deleted_at
+  </sql>
+</mapper>

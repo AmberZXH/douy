@@ -1,0 +1,38 @@
+version: "3"
+networks:
+  douy_network:
+volumes:
+  data:
+  redisdata:
+services:
+  nacos:
+    image: nacos/nacos-server:2.0.2
+    container_name: nacos
+    ports:
+      - "8848:8848"
+    environment:
+      - "JVM_XMS=256m"
+      - "JVM_XMX=256m"
+      - "MODE=standalone"
+    networks:
+      - douy_network
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    networks:
+      - douy_network
+    volumes:
+      - data:/var/lib/mysql
+      - ./yingxue.sql:/docker-entrypoint-initdb.d/yingxue.sql
+    environment:
+      - "MYSQL_ROOT_PASSWORD=zxh228.."
+      - "MYSQL_DATABASE=yingxue"
+
+  redis:
+    image: redis:6.2.5
+    ports:
+    - "6379:6379"
+    volumes:
+    - redisdata:/data

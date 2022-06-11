@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "spring.redis.redisson.config.tansportMode",
+      "type": "java.lang.String",
+      "description": "Description for spring.redis.redisson.config.tansportMode."
+    },
+    {
+      "name": "spring.redis.redisson.config.singleServerConfig.password",
+      "type": "java.lang.String",
+      "description": "Description for spring.redis.redisson.config.singleServerConfig.password."
+    },
+    {
+      "name": "spring.redis.redisson.config",
+      "type": "java.lang.String",
+      "description": "Description for spring.redis.redisson.config."
+    },
+    {
+      "name": "spring.redisson.address",
+      "type": "java.lang.String",
+      "description": "Description for spring.redisson.address."
+    }
+  ] }

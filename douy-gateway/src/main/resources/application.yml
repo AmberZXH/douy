@@ -1,0 +1,44 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 8.136.187.29:8848
+    gateway:
+      routes:
+        - id: admins_router
+          uri: lb://API-ADMINS
+          predicates:
+            - Path=/admin/demos,/admin/tokens,/admin/admin-user,/admin/tokens/**,/admin/test
+          filters:
+            - StripPrefix=1
+        - id: category_router
+          uri: lb://API-CATEGORYS
+          predicates:
+            - Path=/admin/categories/**
+          filters:
+            - StripPrefix=1
+
+        - id: video_router
+          uri: lb://API-VIDEOS
+          predicates:
+            - Path=/admin/videos/**
+          filters:
+            - StripPrefix=1
+        - id: user_router
+          uri: lb://API-USERS
+          predicates:
+            - Path=/admin/users/**
+          filters:
+            - StripPrefix=1
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowCredentials: true
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
