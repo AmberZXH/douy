@@ -2,6 +2,7 @@ package com.zhangxuhui;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.gateway.filter.GatewayFilter;
 
 /**
  * @Author: AmberZxh
@@ -12,5 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AdminGatewayApplication {
     public static void main(String[] args) {
         SpringApplication.run(AdminGatewayApplication.class, args);
+
     }
 }

@@ -10,14 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.util.ObjectUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Author: AmberZxh
- * @DateTime: 2021/12/26 5:47 下午
+ * @DateTime: 2022/6/12 00:17
  * @Description:
  */
 @Configuration

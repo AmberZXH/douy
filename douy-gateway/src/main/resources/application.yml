@@ -21,6 +21,7 @@ spring:
             - Path=/admin/categories/**
           filters:
             - StripPrefix=1
+            - Token
 
         - id: video_router
           uri: lb://API-VIDEOS
@@ -28,12 +29,14 @@ spring:
             - Path=/admin/videos/**
           filters:
             - StripPrefix=1
+            - Token
         - id: user_router
           uri: lb://API-USERS
           predicates:
             - Path=/admin/users/**
           filters:
             - StripPrefix=1
+            - Token
 
       globalcors:
         corsConfigurations:
@@ -42,3 +45,6 @@ spring:
             allowedOrigins: "*"
             allowedHeaders: "*"
             allowedMethods: "*"
+  redis:
+    host: 8.136.187.29
+    port: 6379

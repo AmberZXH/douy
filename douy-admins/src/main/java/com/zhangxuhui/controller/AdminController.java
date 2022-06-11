@@ -42,7 +42,7 @@ public class AdminController {
      */
     @DeleteMapping("/tokens/{token}")
     public void logout(@PathVariable String token){
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
+       // redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.delete(RedisPrefix.TOKEN_KEY+token);
     }
 
@@ -56,7 +56,7 @@ public class AdminController {
     public AdminVO getUserInfo(String token) {
         log.info("当前的token信息：{}", token);
         // 从redis中 获得用户信息
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
+       // redisTemplate.setKeySerializer(new StringRedisSerializer());
         Admin admin = (Admin) redisTemplate.opsForValue().get(RedisPrefix.TOKEN_KEY+token);
         AdminVO adminVO = new AdminVO();
         if (!ObjectUtils.isEmpty(admin)) {
@@ -86,7 +86,7 @@ public class AdminController {
         String token = session.getId();
 
         // 将 token 存入 redis
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
+       // redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.opsForValue().set(RedisPrefix.TOKEN_KEY +token, adminDB, 5, TimeUnit.HOURS);
 
         result.put("token", token);
