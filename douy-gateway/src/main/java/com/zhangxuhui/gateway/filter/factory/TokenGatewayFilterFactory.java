@@ -2,18 +2,16 @@ package com.zhangxuhui.gateway.filter.factory;
 
 import com.zhangxuhui.douyu.constants.LoggerConst;
 import com.zhangxuhui.douyu.constants.RedisPrefix;
+import com.zhangxuhui.douyu.exceptions.IllegalTokenException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
 
-import java.nio.channels.Channel;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,15 +39,20 @@ public class TokenGatewayFilterFactory extends AbstractGatewayFilterFactory<Toke
 
             log.info(LoggerConst.PRINT_LINE + "Enter TokenGateway Filter");
 
-            // 判断 token 是否为空
-            Optional.ofNullable(exchange.getRequest().getQueryParams().get("token")).orElseThrow(() -> new RuntimeException("非法令牌"));
+            log.info("Config Required Token {} ", config.isRequireToken());
 
-            String token = exchange.getRequest().getQueryParams().get("token").get(0);
-            log.info("token: {}", token);
 
-            // 验证token是否合法
-            if (Boolean.FALSE.equals(redisTemplate.hasKey(RedisPrefix.TOKEN_KEY + token))) {
-                throw new RuntimeException("不合法的令牌");
+            if (config.isRequireToken()) {
+                // 判断 token 是否为空
+                Optional.ofNullable(exchange.getRequest().getQueryParams().get("token")).orElseThrow(() -> new IllegalTokenException("非法令牌"));
+
+                String token = exchange.getRequest().getQueryParams().get("token").get(0);
+                log.info("token: {}", token);
+
+                // 验证token是否合法
+                if (Boolean.FALSE.equals(redisTemplate.hasKey(RedisPrefix.TOKEN_KEY + token))) {
+                    throw new IllegalTokenException("不合法的令牌");
+                }
             }
 
 
@@ -57,7 +60,20 @@ public class TokenGatewayFilterFactory extends AbstractGatewayFilterFactory<Toke
         };
     }
 
+    @Override
+    public List<String> shortcutFieldOrder() {
+        return Arrays.asList("requireToken");
+    }
 
     public static class Config {
+        private boolean requireToken;
+
+        public boolean isRequireToken() {
+            return requireToken;
+        }
+
+        public void setRequireToken(boolean requireToken) {
+            this.requireToken = requireToken;
+        }
     }
 }

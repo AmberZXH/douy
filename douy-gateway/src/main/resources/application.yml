@@ -21,7 +21,7 @@ spring:
             - Path=/admin/categories/**
           filters:
             - StripPrefix=1
-            - Token
+            - Token=true
 
         - id: video_router
           uri: lb://API-VIDEOS
@@ -29,14 +29,14 @@ spring:
             - Path=/admin/videos/**
           filters:
             - StripPrefix=1
-            - Token
+            - Token=true
         - id: user_router
           uri: lb://API-USERS
           predicates:
             - Path=/admin/users/**
           filters:
             - StripPrefix=1
-            - Token
+            - Token=true
 
       globalcors:
         corsConfigurations:

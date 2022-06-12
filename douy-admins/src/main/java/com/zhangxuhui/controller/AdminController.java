@@ -2,6 +2,7 @@ package com.zhangxuhui.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.zhangxuhui.douyu.constants.RedisPrefix;
+import com.zhangxuhui.douyu.exceptions.IllegalTokenException;
 import com.zhangxuhui.entity.Admin;
 import com.zhangxuhui.service.AdminService;
 import com.zhangxuhui.vo.AdminVO;
@@ -62,7 +63,7 @@ public class AdminController {
         if (!ObjectUtils.isEmpty(admin)) {
             BeanUtils.copyProperties(admin, adminVO);
         }else{
-            throw new RuntimeException("admin为空");
+            throw new IllegalTokenException("用户信息为空");
         }
 
         return adminVO;
